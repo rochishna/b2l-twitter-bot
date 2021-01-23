@@ -11,7 +11,7 @@ Running side by side
 - scheduled_tweets sends a status check tweet to users in user_list.txt once a week.
 
 TODO:
-Add a flask app that will accept and populate this user list
+Add Authentication to the flask login
 Refer to the presentation below
 
 https://docs.google.com/presentation/d/1395lZfkoi9FB_X-mKAKVYah8l_EbsdaOomUBXybLdMo/edit?usp=sharing
