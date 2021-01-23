@@ -3,21 +3,28 @@ import schedule
 import time
 from time import sleep
 from credentials import *
+import sqlite3
+import random
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
-
-
+greet=['hello there','greetings','hey',"'ello there mate"]
+project=["How's the project coming","How're the things with your project"]
 def run_tasks():
-    with open("user_list.txt") as f:
-        users = f.readlines()
-# TODO: Use different words randomly instead of just one static query
+    conn = sqlite3.connect(r'db.sqlite')
+    p= conn.execute("select title from users")
+    p=list(p)
+    conn.close()
+    users=[]
+    for i in range (len(p)):
+        users.append(p[i][0])
+#TODO: Add more phrases to the greet and project list
     for user in users:
-        tweet = "Hello @"+user+" How's it going with your #b2l_project?"
+        tweet = greet[random.randrange(len(greet))]+" "+"@"+user+" "+project[random.randrange(len(project))]
         api.update_status(status=tweet)
-# TODO: change it to one a week
-    schedule.every(30).minutes.do(run_tasks)
+# TODO: change it to one a week#DONE
+    schedule.every(10080).minutes.do(run_tasks)
     while True:
         schedule.run_pending()
         time.sleep(1)
